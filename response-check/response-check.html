@@ -34,7 +34,7 @@
   let endTime;
   const records = [];
   let timeoutId;
-  $screen.addEventListener('click', funciton () {
+  $screen.addEventListener('click', function () {
     if ($screen.classList.contains('waiting')) { // 파랑
       $screen.classList.remove('waiting');
       $screen.classList.add('ready');
@@ -56,6 +56,13 @@
       records.push(current);
       const average = records.reduce((a, c) => a + c) / records.length;
       $result.textContent = `현재 ${current}ms, 평균: ${average}ms`;
+      const topFive = records.sort((p, c) => p - c).slice(0, 5);
+      topFive.forEach((top, index) => {
+        $result.append(
+          document.createElement('br'),
+          `${index + 1}위: ${top}ms`,
+        );
+      });
       startTime = null;
       endTime = null;
       $screen.classList.remove('now');
